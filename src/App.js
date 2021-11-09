@@ -69,7 +69,7 @@ function App() {
     color: theme.palette.text.secondary,
   }));
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   
     const handleExpandClick = () => {
       setExpanded(!expanded);
