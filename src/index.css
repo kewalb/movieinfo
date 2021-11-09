@@ -5,7 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color:rgb(228, 237, 229)
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-color: black;
 }
 
 code {
