@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { ThumbDown, ThumbUp } from '@mui/icons-material';
+import { Delete, Edit, ThumbDown, ThumbUp } from '@mui/icons-material';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -43,7 +43,7 @@ export default function MovieCard({name, poster, summary, rating}) {
     }
   
     return (
-      <Card sx={{ maxWidth: 345 }} style={{margin: "15px"}}>
+      <Card sx={{ maxWidth: 345, maxHeight: 650 }} style={{margin: "15px"}}>
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="movie">
@@ -66,6 +66,12 @@ export default function MovieCard({name, poster, summary, rating}) {
           </IconButton>
           <IconButton aria-label="share" onClick={addDislike}>
             <ThumbDown variant='outlined' /><Typography style={{margin: '2px'}}>{dislike}</Typography>
+          </IconButton>
+          <IconButton aria-label="share" onClick={addDislike}>
+            <Delete variant='outlined' style={{color:'red'}}/><Typography style={{margin: '2px'}}></Typography>
+          </IconButton>
+          <IconButton aria-label="share" onClick={addDislike}>
+            <Edit variant='outlined' style={{color: 'blue'}}/><Typography style={{margin: '2px'}}></Typography>
           </IconButton>
           <ExpandMore
             expand={expanded}

@@ -1,15 +1,20 @@
-import { useState, useRef } from 'react';
-import { Button, Collapse, Grid} from '@mui/material';
 import './App.css';
-import MovieCard from './MovieCard';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
+import Home from './screens/Home';
+import ColorChange from './screens/Color';
+import AddMovie from './screens/AddMovie';
+import React, {useState} from 'react';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 function App() {
+
 
   const [movieList, addToMovie] = useState([
     {
@@ -61,96 +66,47 @@ function App() {
     }
   ])
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    backgroundColor: 'mintcream',
-    color: theme.palette.text.secondary,
-  }));
-
-  const [expanded, setExpanded] = useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
-
-  // form states and actions
-
-  const ratingRef = useRef('')
-  const idRef = useRef('')
-  const nameRef = useRef('')
-  const posterRef = useRef('') 
-  const summaryRef = useRef('')
-  
- const handleSubmit = (e) => {
-    const newMovie = {
-      id: idRef.current.value,
-      name: nameRef.current.value,
-      poster: posterRef.current.value,
-      summary: summaryRef.current.value,
-      rating: ratingRef.current.value
-    }
-    console.log(newMovie)
-    addToMovie([...movieList, newMovie])
-  }
-
-  const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-  })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }));
 
   return (
-   <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-     <Grid item xs={12} style={{marginTop: "10px"}}>
-      <Item>
-        <ExpandMore 
-        variant="contained" 
-        color="success"
-        expand={expanded}
-        onClick={handleExpandClick}
-        aria-expanded={expanded}
-        aria-label="show more"
-        style={{margin:"10px"}}
-        >
-          Add Movie<AddCircleOutlineOutlinedIcon style={{marginLeft:"3px"}} fontSize="small"></AddCircleOutlineOutlinedIcon>
-        </ExpandMore>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1 },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      
-        <TextField id="id" label="Enter Movie ID" variant="standard" inputRef={idRef} style={{margin: "10px"}}/>
-        <TextField id="name" label="Enter Movie Name" variant="standard" inputRef={nameRef} style={{margin: "10px"}}/>
-        <TextField id="poster" label="Enter Poster URL" variant="standard" inputRef={posterRef} style={{margin: "10px"}}/>
-        <TextField id="summary" label="Enter Movie Summary" variant="standard" inputRef={summaryRef} style={{margin: "10px"}}/>
-        <TextField id="rating" label="Enter Movie Rating" variant="standard" inputRef={ratingRef} style={{margin: "10px"}}/>
-        <Button variant="outlined" onClick={handleSubmit} style={{margin: "10px"}}>Submit</Button>
-      
-    </Box>
-    </Collapse>
-      </Item>
-    </Grid>
-      {movieList.map((movie) => (
-       <Grid item xs={2} sm={4} md={4} key={movie.id}>
-       <Item>
-      <MovieCard key={movie.id} name={movie.name} poster={movie.poster} summary={movie.summary} rating={movie.rating} />
-      </Item>
-     </Grid>
-     ))}
-     
-   </Grid>
+    <Router>
+    <div>
+      <AppBar position="static" >
+        <Toolbar variant="dense">
+          <Link to='/' style={{textDecoration: 'none', color: 'whitesmoke'}}>
+              <h3 style={{ marginLeft:30 }}>MovieApp</h3>
+          </Link>
+          <Link to='/'  style={{textDecoration: 'none', color: 'whitesmoke'}}>
+          <Typography variant="h6"  style={{ marginLeft:30 }}>
+            Home
+          </Typography>
+          </Link>
+          <Link to='add-movie'  style={{textDecoration: 'none', color: 'whitesmoke'}}>
+          <Typography variant="h6"  style={{ marginLeft:30 }}>
+            Add Movie
+          </Typography>
+          </Link>
+          <Link to='color-game'  style={{textDecoration: 'none', color: 'whitesmoke'}}>
+          <Typography variant="h6"  style={{ marginLeft:30 }}>
+           ColorGame
+          </Typography>
+          </Link>
+        </Toolbar>
+      </AppBar>
+    </div>
+
+
+        <Switch>
+          <Route exact path="/">
+            <Home movieList={movieList} addToMovie={addToMovie}/>
+          </Route>
+          <Route path="/add-movie">
+            <AddMovie movieList={movieList} addToMovie={addToMovie}/>
+          </Route>
+          <Route path="/color-game">
+            <ColorChange />
+          </Route>
+        </Switch>
+    </Router>
   );
 }
 
