@@ -12,6 +12,9 @@ import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Delete, Edit, ThumbDown, ThumbUp } from '@mui/icons-material';
+import { useHistory } from 'react-router-dom';
+ 
+
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -24,7 +27,7 @@ const ExpandMore = styled((props) => {
     }),
   }));
   
-export default function MovieCard({name, poster, summary, rating}) {
+export default function MovieCard({movieId, name, poster, summary, rating, movieList, addToMovie}) {
     const [expanded, setExpanded] = React.useState(true);
   
     const handleExpandClick = () => {
@@ -41,9 +44,11 @@ export default function MovieCard({name, poster, summary, rating}) {
     const addDislike = () => {
       setDislike(dislike+1)
     }
+
+    const history = useHistory()
   
     return (
-      <Card sx={{ maxWidth: 345, maxHeight: 650 }} style={{margin: "15px"}}>
+      <Card sx={{ maxWidth: 345, maxHeight: 650 }} style={{margin: "15px"}} >
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="movie">
@@ -55,6 +60,7 @@ export default function MovieCard({name, poster, summary, rating}) {
           subheader="September 14, 2016"
         />
         <CardMedia
+        onClick={() => history.push(`/movie/${movieId}`)}
           component="img"
           height="300"
           image={poster}
@@ -67,10 +73,12 @@ export default function MovieCard({name, poster, summary, rating}) {
           <IconButton aria-label="share" onClick={addDislike}>
             <ThumbDown variant='outlined' /><Typography style={{margin: '2px'}}>{dislike}</Typography>
           </IconButton>
-          <IconButton aria-label="share" onClick={addDislike}>
+          <IconButton aria-label="delete" onClick={()=>{
+            addToMovie(movieList.filter((x, index) => index!==movieId))
+          }}>
             <Delete variant='outlined' style={{color:'red'}}/><Typography style={{margin: '2px'}}></Typography>
           </IconButton>
-          <IconButton aria-label="share" onClick={addDislike}>
+          <IconButton aria-label="edit" onClick={() => history.push(`/edit/${movieId}`)}>
             <Edit variant='outlined' style={{color: 'blue'}}/><Typography style={{margin: '2px'}}></Typography>
           </IconButton>
           <ExpandMore
