@@ -58,7 +58,7 @@ function AddMovie({movieList, addToMovie}){
       
 
     return(
-        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }} style={{height:'100vh'}}>
      <Grid item xs={12} style={{marginTop: "10px"}}>
       <Item>
         <ExpandMore 

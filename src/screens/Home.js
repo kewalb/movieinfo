@@ -9,6 +9,7 @@ function Home({movieList, addToMovie}){
    
       const Item = styled(Paper)(({ theme }) => ({
         ...theme.typography.body2,
+        height: 'auto',
         padding: theme.spacing(1),
         textAlign: 'center',
         backgroundColor: 'mintcream',
@@ -17,11 +18,11 @@ function Home({movieList, addToMovie}){
 
     return(
 
-    <Grid container spacing={{ xs: 1, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+    <Grid container spacing={{ xs: 1, md: 2 }} columns={{ xs: 2, sm: 8, md: 12 }}>
      
       {movieList.map((movie, index) => (
        <Grid item xs={2} sm={4} md={4} key={index}>
-       <Item style={{ maxHeight:'700px', margin: '10px'}}>
+       <Item style={{ margin: '10px'}}>
       <MovieCard key={index} movieId={index} name={movie.name} poster={movie.poster} summary={movie.summary} rating={movie.rating} movieList={movieList} addToMovie={addToMovie} />
       </Item>
      </Grid>

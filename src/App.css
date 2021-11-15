@@ -3,3 +3,23 @@
   font-family: 'Rubik', sans-serif;
 }
 
+.game-box{
+  background-color: 'white';
+  color: 'black';
+  height: 8rem;
+  width: 8rem;
+  font-size: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  cursor: pointer;
+
+}
+
+.board{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: min-content;
+  text-align: center;
+}

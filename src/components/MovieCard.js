@@ -48,7 +48,7 @@ export default function MovieCard({movieId, name, poster, summary, rating, movie
     const history = useHistory()
   
     return (
-      <Card sx={{ maxWidth: 345, maxHeight: 650 }} style={{margin: "15px"}} >
+      <Card sx={{ }} style={{margin: "15px"}} >
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="movie">
@@ -57,7 +57,6 @@ export default function MovieCard({movieId, name, poster, summary, rating, movie
           }
           
           title={name}
-          subheader="September 14, 2016"
         />
         <CardMedia
         onClick={() => history.push(`/movie/${movieId}`)}
