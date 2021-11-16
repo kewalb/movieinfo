@@ -8,13 +8,20 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import { Edit } from '@mui/icons-material';
 import { useParams } from "react-router-dom";
+import {useHistory} from 'react-router-dom'
 
-function EditMovie({movieList, addToMovie}){
-
+function EditMovie(){
+  const history = useHistory()
+    const [movie, setMovie] = useState({})
     const {id} = useParams()
     console.log(id)
     const [expanded, setExpanded] = useState(false);
-      
+     
+    React.useEffect(() => {
+      fetch(`https://61921f02aeab5c0017105d5a.mockapi.io/movies/${id}`)
+      .then(response => response.json())
+      .then(data => setMovie(data))
+  }, [id])
         const handleExpandClick = () => {
           setExpanded(!expanded);
         };
@@ -28,7 +35,6 @@ function EditMovie({movieList, addToMovie}){
       const summaryRef = useRef('')
       
      const handleSubmit = (e) => {
-         const items = [...movieList]
         const newMovie = {
           trailer: trailerRef.current.value,
           name: nameRef.current.value,
@@ -37,15 +43,21 @@ function EditMovie({movieList, addToMovie}){
           rating: ratingRef.current.value
         }
         const item = {
-            ...movieList[id],
+            ...movie,
             trailer: newMovie.trailer,
             name: newMovie.name,
             poster: newMovie.poster,
             summary: newMovie.summary,
             rating: newMovie.rating 
         }
-        items[id] = item
-        addToMovie(items)
+      fetch(`https://61921f02aeab5c0017105d5a.mockapi.io/movies/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    });
+    history.push('/')
       }
     
       const ExpandMore = styled((props) => {
@@ -94,7 +106,7 @@ function EditMovie({movieList, addToMovie}){
        >
       
         <TextField 
-        defaultValue={movieList[id].trailer} 
+        defaultValue={movie.trailer} 
         id="trailer" 
         label="Enter trailer url" 
         variant="standard" 
@@ -103,7 +115,7 @@ function EditMovie({movieList, addToMovie}){
 
 
         <TextField 
-        defaultValue={movieList[id].name} 
+        defaultValue={movie.name} 
         id="name" label="Enter Movie Name" 
         variant="standard" 
         inputRef={nameRef} 
@@ -111,7 +123,7 @@ function EditMovie({movieList, addToMovie}){
 
 
         <TextField 
-        defaultValue={movieList[id].poster} 
+        defaultValue={movie.poster} 
         id="poster" label="Enter Poster URL" 
         variant="standard" 
         inputRef={posterRef} 
@@ -119,7 +131,7 @@ function EditMovie({movieList, addToMovie}){
 
 
         <TextField 
-        defaultValue={movieList[id].summary} 
+        defaultValue={movie.summary} 
         id="summary" 
         label="Enter Movie Summary" 
         variant="standard" 
@@ -128,7 +140,7 @@ function EditMovie({movieList, addToMovie}){
 
 
         <TextField 
-        defaultValue={movieList[id].rating} 
+        defaultValue={movie.rating} 
         id="rating" label="Enter Movie Rating" 
         variant="standard" 
         inputRef={ratingRef} 

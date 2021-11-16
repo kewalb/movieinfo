@@ -27,13 +27,13 @@ const ExpandMore = styled((props) => {
     }),
   }));
   
-export default function MovieCard({movieId, name, poster, summary, rating, movieList, addToMovie}) {
+export default function MovieCard({id, name, poster, summary, rating}) {
     const [expanded, setExpanded] = React.useState(true);
   
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-
+    console.log(id)
     const [like, setLike] = React.useState(0)
     const [dislike, setDislike] = React.useState(0)
 
@@ -46,6 +46,13 @@ export default function MovieCard({movieId, name, poster, summary, rating, movie
     }
 
     const history = useHistory()
+
+    const handleDelete = (id) => {
+      fetch(`https://61921f02aeab5c0017105d5a.mockapi.io/movies/${id}`, {
+        method: "DELETE",
+      });
+      history.push('/')
+    }
   
     return (
       <Card sx={{ }} style={{margin: "15px"}} >
@@ -59,7 +66,7 @@ export default function MovieCard({movieId, name, poster, summary, rating, movie
           title={name}
         />
         <CardMedia
-        onClick={() => history.push(`/movie/${movieId}`)}
+        onClick={() => history.push(`/movie/${id}`)}
           component="img"
           height="300"
           image={poster}
@@ -72,12 +79,10 @@ export default function MovieCard({movieId, name, poster, summary, rating, movie
           <IconButton aria-label="share" onClick={addDislike}>
             <ThumbDown variant='outlined' /><Typography style={{margin: '2px'}}>{dislike}</Typography>
           </IconButton>
-          <IconButton aria-label="delete" onClick={()=>{
-            addToMovie(movieList.filter((x, index) => index!==movieId))
-          }}>
+          <IconButton aria-label="delete" onClick={()=> handleDelete(id)}>
             <Delete variant='outlined' style={{color:'red'}}/><Typography style={{margin: '2px'}}></Typography>
           </IconButton>
-          <IconButton aria-label="edit" onClick={() => history.push(`/edit/${movieId}`)}>
+          <IconButton aria-label="edit" onClick={() => history.push(`/edit/${id}`)}>
             <Edit variant='outlined' style={{color: 'blue'}}/><Typography style={{margin: '2px'}}></Typography>
           </IconButton>
           <ExpandMore
